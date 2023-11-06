@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="listReq()">글 목록</button>
+<button onclick="saveReq()">글작성</button>
+</body>
+<script>
+    const saveReq =() =>{
+        location.href = "/board/save"; // <a herf=> 와 같은 기능
+    }
+    const listReq=()=>{
+        location.href = "/board/list";
+    }
+
+</script>
+</html>
