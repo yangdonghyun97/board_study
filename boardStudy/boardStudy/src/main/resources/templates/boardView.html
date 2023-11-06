@@ -8,20 +8,46 @@
 <table>
     <tr>
         <th>id</th>
-        <th>title</th>
-        <th>writer</th>
-        <th>date</th>
-        <th>contents</th>
-        <th>hits</th>
-    </tr>
-    <tr th:each="board : ${board}">
         <td th:text="${board.id}"></td>
+    </tr>
+    <tr>
+        <th>title</th>
         <td th:text="${board.boardTitle}"></td>
+    </tr>
+    <tr>
+        <th>writer</th>
         <td th:text="${board.boardWriter}"></td>
-        <td th:text="*{#temporals.format(board.boardCreatedTime, 'yyyy-MM-dd HH:mm')}"></td>
-        <td th:text="${board.boardContents}"></td>
+    </tr>
+    <tr>
+        <th>date</th>
+        <td th:text="${board.boardCreatedTime}"></td>
+    </tr>
+    <tr>
+        <th>hits</th>
         <td th:text="${board.boardHits}"></td>
     </tr>
+    <tr>
+        <th>contents</th>
+        <td th:text="${board.boardContents}"></td>
+    </tr>
 </table>
+<button onclick="listReq()">목록</button>
+<button onclick="updateReq()">수정</button>
+<button onclick="deleteReq()">삭제</button>
 </body>
+
+<script th:inline="javaScript">
+    const listReq = ()=> {
+        location.href = "/board/list";
+    }
+
+    const updateReq = ()=> {
+    const id = [[${board.id}]]
+        location.href="/board/update/" + id;
+    }
+    const deleteReq= ()=>{
+
+    }
+
+</script>
 </html>

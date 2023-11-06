@@ -22,12 +22,13 @@ public class BoardController {
 
     //View
     @GetMapping("/save")
-    public String saveForm(){
+    public String saveForm() {
 
         return "save";
     }
+
     @GetMapping("/list")
-    public String findALL(Model model){
+    public String findALL(Model model) {
         //DB에서 전체 게시글 데이터를 가져와서
         List<BoardDTO> boardTOList = boardService.findALL();
         model.addAttribute("boardList", boardTOList);
@@ -35,20 +36,33 @@ public class BoardController {
         return "boardList";
     }
 
-@GetMapping("/{id}")  // 경로상으로 받는 {id}는  PathVariable를 써줘야 한다.
-public String findById(@PathVariable("id") Long id, Model model){
-       BoardDTO boardDTO  = boardService.findById(id);
-       model.addAttribute("board", boardDTO);
-       return "boardView";
-}
+    @GetMapping("/{id}")  // 경로상으로 받는 {id}는  PathVariable를 써줘야 한다.
+    public String findById(@PathVariable("id") Long id, Model model) {
+        boardService.upDateHits(id);
+        BoardDTO boardDTO = boardService.findById(id);
+        model.addAttribute("board", boardDTO);
+        return "boardView";
+    }
 
 
-
-
+    @GetMapping("/update/{id}")
+    public String updateForm(@PathVariable Long id, Model model){
+       BoardDTO boardDTO = boardService.findById(id);
+       model.addAttribute("boardUpdate", boardDTO);
+       return "boardUpdate";
+    }
 
     @PostMapping("/save")
-    public String save(BoardDTO boardDTO){
+    public String save(BoardDTO boardDTO) {
         boardService.save(boardDTO);
         return "index";
+    }
+
+    @PostMapping("/update")
+    public String update(BoardDTO boardDTO, Model model){
+      BoardDTO board =  boardService.update(boardDTO);
+      model.addAttribute("board", board);
+
+      return "boardView";
     }
 }
