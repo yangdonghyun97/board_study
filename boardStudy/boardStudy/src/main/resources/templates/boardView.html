@@ -30,6 +30,10 @@
         <th>contents</th>
         <td th:text="${board.boardContents}"></td>
     </tr>
+    <tr th:if="${board.getFileAttached() == 1}">
+        <th>image</th>
+        <td><img th:src="@{|/upload/${board.storedFileName}|}"></td>
+    </tr>
 </table>
 <button onclick="listReq()">목록</button>
 <button onclick="updateReq()">수정</button>
@@ -38,15 +42,16 @@
 
 <script th:inline="javaScript">
     const listReq = ()=> {
-        location.href = "/board/list";
+        location.href = "/board/paging?page="+[[${page}]];
     }
 
     const updateReq = ()=> {
     const id = [[${board.id}]]
-        location.href="/board/update/" + id;
+        location.href="/board/update/" + id; // Get 방식
     }
     const deleteReq= ()=>{
-
+    const id = [[${board.id}]]
+        location.href="/board/delete/"+ id;
     }
 
 </script>
