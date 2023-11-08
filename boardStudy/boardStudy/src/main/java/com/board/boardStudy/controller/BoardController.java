@@ -1,7 +1,9 @@
 package com.board.boardStudy.controller;
 
 import com.board.boardStudy.DTO.BoardDTO;
+import com.board.boardStudy.DTO.CommentDTO;
 import com.board.boardStudy.service.BoardService;
+import com.board.boardStudy.service.CommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +24,7 @@ import java.util.List;
 public class BoardController {
 
     private final BoardService boardService;
-
+    private final CommentService commentService;
 
     //View
     @GetMapping("/save")
@@ -46,6 +48,13 @@ public class BoardController {
         BoardDTO boardDTO = boardService.findById(id);
         model.addAttribute("board", boardDTO);
         model.addAttribute("page", pageable.getPageNumber());
+
+        /* 댓글 목록 가져오기 */
+        List<CommentDTO> commentDTOList = commentService.findAll(id);
+        model.addAttribute("commentList", commentDTOList);
+        model.addAttribute("board", boardDTO);
+        model.addAttribute("page", pageable.getPageNumber());
+
         return "boardView";
     }
 
